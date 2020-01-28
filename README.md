@@ -5,7 +5,7 @@
 O teste de desenvolvimento da Globo Cereais consiste em desenvolver um projeto de gerenciamento de *VACAS*.  
 
 ## Introdução
-A fazenda SpeedCow tem varias filiais pelo estado de Goiás e  esta passando por um problema de gerenciamento de seus rebanhos, vacas são compradas para a fazenda mas não são registradas, sua missão é fazer o sistema de gerenciamento das vacas, o utilizador do sistema será um administrador, ele deve possuir os atributos para *CRIAR*, *REMOVER*, *EDITAR* e *LISTAR* todas as vacas do sistema. As vacas são categorizadas por filiais, cada filial pode ter o limite máximo de 200 VACAS.
+A fazenda SpeedCow tem varias filiais pelo estado de Goiás e  esta passando por um problema de gerenciamento de seus rebanhos, vacas são compradas para a fazenda mas não são registradas, sua missão é fazer o sistema de gerenciamento das vacas, o utilizador do sistema será um administrador, ele deve possuir as ações de *CRIAR*, *REMOVER*, *EDITAR* e *LISTAR* todas as vacas do sistema. As vacas são categorizadas por filiais, cada filial pode ter o limite máximo de 200 VACAS.
 
 ### Requisitos
 
