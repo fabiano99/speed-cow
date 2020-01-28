@@ -20,6 +20,7 @@ A fazenda SpeedCow tem varias filiais pelo estado de Goiás e  esta passando por
 * Será avaliado os limites estabelecidos e tratativas de erro dentro do código.
 
 ### Bonus
+* Documentação.
 * Implementação de uma dashboard listando as vacas de cada filial.
 * Representação do total usado vs limite máximo de vacas por filial utilizando barras de progresso(componente visual).
 * Testes unitários.
