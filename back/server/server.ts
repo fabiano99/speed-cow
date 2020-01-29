@@ -1,5 +1,5 @@
 import * as restify from 'restify'
-import mongoose from 'mongoose'
+import mongoose, { Mongoose } from 'mongoose'
 import { environment } from '../common/environment'
 import { Router } from '../common/router'
 import { handleError } from './error-handler'
@@ -8,15 +8,14 @@ import { handleError } from './error-handler'
 export class Server {
 	application: restify.Server
 	
-	initializeDb(): Promise<any>{
-		// (<any>mongoose).Promise = global.Promise
+	initializeDb(): Promise<mongoose.Mongoose>{
 		return mongoose.connect(environment.db.url, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		})
 	}
 
-	initRoutes(routers: Router[]): Promise<any> {
+	initRoutes(routers: Router[]): Promise<restify.Server> {
 		return new Promise((resolve, reject) => {
 			try {
 				this.application = restify.createServer({
