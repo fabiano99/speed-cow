@@ -1,5 +1,13 @@
-import mongoose from 'mongoose'
+import moment, { isDate } from 'moment'
 
-export const limitCow = (idFilial: mongoose.Types.ObjectId) => {
-	// consulta qtd de animais na fazenda. Deve ser menor que 200
+export const validDate = (date: Date): boolean => {
+
+	const today = Date.now()
+
+	if (isDate(date)) {
+		return moment(date).isBefore(Date.now())
+	}
+
+	return false
+
 }

@@ -6,12 +6,14 @@ import { handleError } from './error-handler'
 
 
 export class Server {
-	application: restify.Server
+	application: restify.Server | undefined
 	
 	initializeDb(): Promise<mongoose.Mongoose>{
 		return mongoose.connect(environment.db.url, {
 			useNewUrlParser: true,
-			useUnifiedTopology: true
+			useUnifiedTopology: true,
+			useFindAndModify: false,
+			useCreateIndex:true
 		})
 	}
 

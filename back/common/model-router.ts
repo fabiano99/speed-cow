@@ -1,14 +1,15 @@
 import mongoose from 'mongoose'
 import { Router } from './router';
 import { NotFoundError } from 'restify-errors';
+import * as restify from 'restify'
 
 export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 
-	constructor(protected model: mongoose.Model<D>) {
+	constructor(public model: mongoose.Model<D>) {
 		super()
 	}
 
-	validadeId = (req, resp, next)=>{
+	validadeId = (req: restify.Request, resp: restify.Response, next: any)=>{
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)){
 			next(new NotFoundError('Document not found'))
 		} else {
@@ -16,12 +17,12 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 		}
 	}
 
-	findAll = (req, resp, next)=>{
+	findAll = (req: restify.Request, resp: restify.Response, next: any)=>{
 		this.model.find().then(this.renderAll(resp, next))
 		.catch(next)
 	}
 
-	findById =(req, resp, next)=>{
+	findById =(req: restify.Request, resp: restify.Response, next: any)=>{
 		this.model.findById(req.params.id)
 		.populate('user', 'name')
 		.populate('restaurant', 'name')
@@ -29,16 +30,16 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 		.catch(next)
 	}
 
-	save = (req, resp, next)=>{
+	save = (req: restify.Request, resp: restify.Response, next: any)=>{
 		let document = new this.model(req.body)
 
 		document.save().then(this.render(resp, next))
 		.catch(next)
 	}
 
-	replace = (req, resp, next)=>{
+	replace = (req: restify.Request, resp: restify.Response, next: any)=>{
 		const options = {runValidators: true, overwrite: true}
-		this.model.update({_id:req.params.id}, req.body, options).exec()
+		this.model.updateOne({_id:req.params.id}, req.body, options).exec()
 		.then(result=>{
 			if(result.n) {
 				return this.model.findById(req.params.id)
@@ -49,16 +50,17 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 		.catch(next)
 	}
 
-	update = (req, resp, next)=>{
+	update = (req: restify.Request, resp: restify.Response, next: any)=>{
 		const options = {runValidators: true,new: true}
 		this.model.findByIdAndUpdate(req.params.id, req.body, options)
 		.then(this.render(resp, next))
 		.catch(next)
 	}
 
-	delete = (req, resp, next)=>{
-		this.model.remove({_id:req.params.id}).exec().then((cmdResult:any)=>{
-			if(cmdResult.result.n) {
+	delete = (req: restify.Request, resp: restify.Response, next: any)=>{
+		this.model.deleteOne({_id:req.params.id}).exec().then((cmdResult:any)=>{
+
+			if(cmdResult.n) {
 				resp.send(204)
 				
 			} else {
