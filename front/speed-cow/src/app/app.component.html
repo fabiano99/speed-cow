@@ -1,0 +1,15 @@
+<td-layout-nav toolbarTitle="title" logo="logo" icon="icon" color="primary" navigationRoute="/">
+  <button mat-icon-button td-menu-button> // can use `[tdLayoutToggle]` to toggle main sidenav
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div td-toolbar-content>
+    .. main toolbar content
+  </div>
+
+  <router-outlet></router-outlet>
+  
+  <td-layout-footer color="primary"> // color is optional
+    ... main footer content
+  </td-layout-footer>
+</td-layout-nav>
+
