@@ -1,6 +1,6 @@
 export class Affiliate {
 
-	id: string;
+	_id: string;
 	name: string;
 	totalCows: number;
 

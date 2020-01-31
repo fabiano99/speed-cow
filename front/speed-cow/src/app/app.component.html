@@ -1,0 +1,55 @@
+
+
+<mat-sidenav-container
+fxFill
+  class="" (backdropClick)="close('backdrop')" >
+  <mat-sidenav class="menu" #sidenav (keydown.escape)="close('escape')" disableClose>
+    <div class="">
+      <button color="accent" mat-icon-button  aria-label="menu" (click)="close('toggle button')" >
+        <mat-icon>menu_open</mat-icon>
+      </button>
+    </div>
+
+    <mat-nav-list >
+      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/']" class="menu-item">
+        <mat-icon class="tc-grey-50">home</mat-icon>Home
+      </a>
+
+      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['affiliates']" class="menu-item">
+        <mat-icon class="tc-grey-50">home</mat-icon>Affiliates
+      </a>
+
+      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['cows']" class="menu-item">
+        <mat-icon class="tc-grey-50">home</mat-icon>Cows
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div  class="topbar" fxLayoutAlign="start center">
+      <button mat-icon-button  aria-label="menu" (click)="sidenav.open()" color="accent">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div>
+        <button mat-button >Speed Cow</button>
+      </div>
+    </div>
+
+
+
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<div fxLayout="row" fxLayoutAlign="center end">
+  <span class="mat-caption">Desenvolvido por Fabiano Moreira | {{ currentYear }}</span>
+</div>
+
+
+
+

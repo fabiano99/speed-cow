@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 @Component({
   selector: 'sc-home',
   templateUrl: './home.component.html',

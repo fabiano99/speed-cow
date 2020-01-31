@@ -1,0 +1,60 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>
+          Lista de Filiais
+        </mat-card-title>
+        <mat-card-subtitle>...</mat-card-subtitle>
+    <div fxLayout="row" fxLayoutAlign="start center" class="pad-left-sm pad-right-sm" fxFlex="">
+<!--      <span *ngIf="!searchBox.searchVisible" class="push-left-sm">-->
+<!--        <mat-card-title>-->
+<!--          Lista de Produtos-->
+<!--        </mat-card-title>-->
+<!--      </span>-->
+<!--      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Buscar por nome" (searchDebounce)="search($event)" flex></td-search-box>-->
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="affiliates?.length === 0" fxLayout="row" fxLayoutAlign="center center">
+      <mat-list  >
+        <mat-list-item >
+          <mat-icon mat-list-icon>list</mat-icon>
+          <p mat-line>Não há registros</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <mat-list>
+      <h3 mat-subheader></h3>
+      <mat-list-item *ngFor="let affiliate of affiliates">
+        <mat-icon mat-list-icon>desktop_mac</mat-icon>
+        <h4 mat-line>{{affiliate.name}}</h4>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="affiliate._id">
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+          </button>
+          <button mat-menu-item (click)="delete(affiliate._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Remover</span>
+          </button>
+        </mat-menu>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <!--      <mat-divider></mat-divider>-->
+    </mat-list>
+  </mat-card-content>
+
+</mat-card>
+
+ <div fxLayoutAlign="end end" style="margin-right: 20px; margin-top: 20px">
+   <button  mat-button mat-fab class="mat-fab-position-bottom-right z-3"   [routerLink]="['new_record']">
+     <mat-icon >add</mat-icon>
+   </button>
+ </div>
+
+

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
+import * as moment from 'moment';
 
 @Component({
   selector: 'sc-root',
@@ -11,4 +13,13 @@ export class AppComponent {
   constructor() {
   }
   title = 'speed-cow';
+
+  @ViewChild('sidenav', {static: false}) sidenav: MatSidenav;
+
+  reason = '';
+  currentYear = moment().year();
+  close(reason: string) {
+    this.reason = reason;
+    this.sidenav.close();
+  }
 }

@@ -1,8 +1,9 @@
 import * as restify from 'restify'
-import mongoose, { Mongoose } from 'mongoose'
+import mongoose from 'mongoose'
 import { environment } from '../common/environment'
 import { Router } from '../common/router'
 import { handleError } from './error-handler'
+import corsMiddleware from 'restify-cors-middleware'
 
 
 export class Server {
@@ -24,6 +25,18 @@ export class Server {
 					name: 'speed-cow-api',
 					version: '1.0.0'
 				})
+
+				const corsOptions: corsMiddleware.Options = {
+					preflightMaxAge: 10,
+					origins: ['http://localhost:4200'],
+					allowHeaders: ['authorization'],
+					exposeHeaders: ['']
+				}
+
+				const cors: corsMiddleware.CorsMiddleware = corsMiddleware(corsOptions)
+
+				this.application.pre(cors.preflight)
+				this.application.use(cors.actual)
 
 				this.application.use(restify.plugins.bodyParser())
 				this.application.use(restify.plugins.queryParser())
