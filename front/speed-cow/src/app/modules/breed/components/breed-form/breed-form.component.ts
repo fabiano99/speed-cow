@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import {AffiliateService} from '../service/affiliate.service';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {ExitComponent} from '../../dialogs/exit/exit.component';
-import {ErrorComponent} from '../../dialogs/error/error.component';
+import {ExitComponent} from '../../../dialogs/exit/exit.component';
+import {ErrorComponent} from '../../../dialogs/error/error.component';
+import {BreedService} from '../../service/breed.service';
 
 @Component({
-  selector: 'sc-affiliate-form',
-  templateUrl: './affiliate-form.component.html',
-  styleUrls: ['./affiliate-form.component.css']
+  selector: 'sc-breed-form',
+  templateUrl: './breed-form.component.html',
+  styleUrls: ['./breed-form.component.css']
 })
-export class AffiliateFormComponent implements OnInit {
+export class BreedFormComponent implements OnInit {
+
   form: FormGroup;
-  constructor(public service: AffiliateService,
+  constructor(public service: BreedService,
               public fb: FormBuilder,
               public router: Router,
               public route: ActivatedRoute,
@@ -44,7 +45,7 @@ export class AffiliateFormComponent implements OnInit {
 
   save() {
     const id = this.route.snapshot.params.id;
-    const msg = ( id === 'new_record' ) ? 'Filial Salva!' : 'Filial Atualizada!';
+    const msg = ( id === 'new_record' ) ? 'Raça Salva!' : 'Raça Atualizada!';
 
     if (id === 'new_record' ) {
       this.service.save(this.form.value).subscribe(result => {
@@ -103,4 +104,5 @@ export class AffiliateFormComponent implements OnInit {
     });
     return dialogRef.afterClosed();
   }
+
 }

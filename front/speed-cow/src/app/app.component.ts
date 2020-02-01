@@ -17,7 +17,7 @@ export class AppComponent {
   @ViewChild('sidenav', {static: false}) sidenav: MatSidenav;
 
   reason = '';
-  currentYear = moment().year();
+
   close(reason: string) {
     this.reason = reason;
     this.sidenav.close();

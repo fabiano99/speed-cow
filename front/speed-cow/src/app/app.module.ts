@@ -14,6 +14,10 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {AffiliateModule} from './modules/affiliate/affiliate.module';
 import {AffiliateService} from './modules/affiliate/service/affiliate.service';
 import {HttpClientModule} from '@angular/common/http';
+import {BreedModule} from './modules/breed/breed.module';
+import {ChartsModule} from 'ng2-charts';
+import {CowModule} from './modules/cow/cow.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 const EXTRA_BREAKPOINTS = [{
@@ -27,7 +31,8 @@ const EXTRA_BREAKPOINTS = [{
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     // (optional) Additional Covalent Modules imports
@@ -40,12 +45,15 @@ const EXTRA_BREAKPOINTS = [{
     MatCardModule,
     LayoutModule,
     HttpClientModule,
+    ChartsModule,
     FlexLayoutModule.withConfig({
       useColumnBasisZero: false,
       printWithBreakpoints: ['md', 'lt-lg', 'lt-xl', 'gt-sm', 'gt-xs']
     }),
     MatSidenavModule,
-    AffiliateModule.forRoot()
+    AffiliateModule.forRoot(),
+    BreedModule.forRoot(),
+    CowModule.forRoot()
   ],
   providers: [{
     provide: BREAKPOINT,

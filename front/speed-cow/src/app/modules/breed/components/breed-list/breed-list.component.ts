@@ -1,44 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import {Affiliate} from '../../../models/affiliate.model';
-import {AffiliateService} from '../service/affiliate.service';
-import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {toArray} from 'rxjs/operators';
-import {arrayify} from 'tslint/lib/utils';
-import {ExitComponent} from '../../dialogs/exit/exit.component';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {BreedService} from '../../service/breed.service';
+import {Breed} from '../../../../models/breed.model';
+import {ExitComponent} from '../../../dialogs/exit/exit.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {ErrorComponent} from '../../dialogs/error/error.component';
+import {ErrorComponent} from '../../../dialogs/error/error.component';
 
 @Component({
-  selector: 'sc-affiliate-list',
-  templateUrl: './affiliate-list.component.html',
-  styleUrls: ['./affiliate-list.component.css']
+  selector: 'sc-breed-list',
+  templateUrl: './breed-list.component.html',
+  styleUrls: ['./breed-list.component.css']
 })
-export class AffiliateListComponent implements OnInit {
-  affiliates: Affiliate[];
+export class BreedListComponent implements OnInit {
+  breeds: Breed[];
+
   constructor(
-    private service: AffiliateService,
+    private service: BreedService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.load();
   }
 
+  load() {
+    this.service.list().subscribe(result => {
+      this.breeds = [].concat(result);
+    });
+  }
+
   delete(id) {
-    this.openDialog('Deseja remover esta filial?', 'Remover', 'Cancelar').subscribe((result) => {
+    this.openDialog('Deseja remover esta raça?', 'Remover', 'Cancelar').subscribe(result => {
+
       if (result) {
         this.service.delete(id).subscribe(deleted => {
           this.load();
           this.openSnackBar('Removido', 'OK');
-        }, (e) => {
-          this.openDialogError(e);
+        }, (error) => {
+          this.openDialogError(error);
         });
       }
+
     });
 
   }
@@ -70,14 +72,6 @@ export class AffiliateListComponent implements OnInit {
       data: error
     });
     return dialogRef.afterClosed();
-  }
-
-  load() {
-    this.service.list().subscribe((result: Affiliate) => {
-
-      this.affiliates =  [].concat(result);
-
-    });
   }
 
 }
