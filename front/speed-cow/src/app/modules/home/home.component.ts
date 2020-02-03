@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-// import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import {Component, OnInit} from '@angular/core';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {Label} from 'ng2-charts';
+import {Color, Label} from 'ng2-charts';
+import {Cow} from '../../models/cow.model';
+import {CowService} from '../cow/service/cow.service';
+import {Affiliate} from '../../models/affiliate.model';
+
 @Component({
   selector: 'sc-home',
   templateUrl: './home.component.html',
@@ -10,52 +13,92 @@ import {Label} from 'ng2-charts';
 })
 export class HomeComponent implements OnInit {
 
-  public barChartOptions: ChartOptions = {
+  public top5ChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{}], yAxes: [{}] },
+  elements: {
+      rectangle: {backgroundColor: ['blue']}
+  },
+    scales: {
+      yAxes:[{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
     plugins: {
       datalabels: {
         anchor: 'end',
-        align: 'end',
+        align: 'end'
       }
     }
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  // public barChartPlugins = [pluginDataLabels];
-
-  public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+  public top5ChartLabels: Label[] = ['Filiais'];
+  public top5ChartType: ChartType = 'bar';
+  public top5ChartLegend = false;
+  public barChartPlugins = [pluginDataLabels];
+  public top5ChartColor: Color[] = [
+    {backgroundColor: ['blue', 'red', 'yellow', 'gray', 'green']}
   ];
 
-  constructor() { }
+  // public top5ChartPlugins = [pluginDataLabels];
+
+  public top5ChartData: ChartDataSets[] = [];
+
+  listCows: Cow[] = [];
+  affiliates: Affiliate[] = [];
+  cowsPerAffiliate: any[] = [];
+
+  constructor(private cowService: CowService) { }
 
   ngOnInit() {
+    this.cowService.list().subscribe(result => {
+        this.listCows = [].concat(result);
+
+        // List of populated affiliates
+        const unique: any[] = [];
+        this.affiliates = this.listCows.map(cow => cow.affiliate).filter( (value, index , self) => {
+          if (!unique.includes(value._id)) {
+            unique.push(value._id);
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        // count cows per affiliate
+        this.affiliates.map(aff => {
+          this.cowService.list(null, aff._id).subscribe(r => {
+            const obj: any[] = [].concat(r);
+            this.cowsPerAffiliate.push( { name: aff.name, total: obj.length});
+
+            this.top5ChartData.push({label: aff.name, data: [obj.length]});
+
+            this.cowsPerAffiliate = this.cowsPerAffiliate.sort(function(a, b) {
+              if (a.total < b.total) { return 1; }
+              if (a.total > b.total) { return -1; }
+              return 0;
+            });
+
+            this.top5ChartData = this.top5ChartData.sort(function(a, b) {
+              if (a.data[0] < b.data[0]) { return 1; }
+              if (a.data[0] > b.data[0]) { return -1; }
+              return 0;
+            });
+          });
+        });
+      }
+    );
   }
 
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+
   }
 
-  public randomize(): void {
-    // Only Change 3 values
-    const data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    this.barChartData[0].data = data;
-  }
 
 }

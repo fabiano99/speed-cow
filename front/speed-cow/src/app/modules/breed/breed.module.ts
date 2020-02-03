@@ -4,13 +4,13 @@ import { BreedListComponent } from './components/breed-list/breed-list.component
 import { BreedFormComponent } from './components/breed-form/breed-form.component';
 import {BreedService} from './service/breed.service';
 import {
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule, MatPaginatorModule
 } from '@angular/material';
 import {FlexModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
@@ -20,19 +20,20 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [BreedListComponent, BreedFormComponent],
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    FlexModule,
-    MatButtonModule,
-    MatMenuModule,
-    RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatListModule,
+        MatIconModule,
+        FlexModule,
+        MatButtonModule,
+        MatMenuModule,
+        RouterModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatPaginatorModule
+    ]
 })
 export class BreedModule {
   static forRoot(): ModuleWithProviders {

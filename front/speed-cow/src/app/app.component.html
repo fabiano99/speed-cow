@@ -15,16 +15,16 @@
         <mat-icon class="tc-grey-50">home</mat-icon>Home
       </a>
 
-      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['affiliates']" class="menu-item">
-        <mat-icon class="tc-grey-50">home</mat-icon>Filiais
+      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['cows']" class="menu-item">
+        <mat-icon class="tc-grey-50" svgIcon="cow"></mat-icon>Vacas
       </a>
 
-      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['cows']" class="menu-item">
-        <mat-icon class="tc-grey-50">home</mat-icon>Vacas
+      <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['affiliates']" class="menu-item">
+        <mat-icon class="tc-grey-50">business</mat-icon>Filiais
       </a>
 
       <a  mat-list-item routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['breeds']" class="menu-item">
-        <mat-icon class="tc-grey-50">home</mat-icon>Raças
+        <mat-icon class="tc-grey-50">list</mat-icon>Raças
       </a>
     </mat-nav-list>
 
@@ -37,8 +37,11 @@
           <mat-icon>menu</mat-icon>
         </button>
 
-        <div>
-          <button mat-button >Speed Cow</button>
+        <div [routerLink]="['/']">
+          <a style="text-decoration: none; color: white; cursor: pointer">
+            <p> Speed Cow </p>
+          </a>
+
         </div>
       </div>
 

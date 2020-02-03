@@ -1,83 +1,64 @@
-<!--<div layout-gt-sm="row" layout-sm="column" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" >-->
-<!--    &lt;!&ndash;    <div flex-gt-sm="50">&ndash;&gt;-->
-<!--    &lt;!&ndash;      <mat-card class="example-card">&ndash;&gt;-->
-<!--    &lt;!&ndash;        <mat-card-header>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <div mat-card-avatar class="example-header-image"></div>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <mat-card-title>Shiba Inu</mat-card-title>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <mat-card-subtitle>Dog Breed</mat-card-subtitle>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </mat-card-header>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">&ndash;&gt;-->
-<!--    &lt;!&ndash;        <mat-card-content>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <p>&ndash;&gt;-->
-<!--    &lt;!&ndash;            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.&ndash;&gt;-->
-<!--    &lt;!&ndash;            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally&ndash;&gt;-->
-<!--    &lt;!&ndash;            bred for hunting.&ndash;&gt;-->
-<!--    &lt;!&ndash;          </p>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </mat-card-content>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <mat-card-actions>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <button mat-button>LIKE</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;          <button mat-button>SHARE</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </mat-card-actions>&ndash;&gt;-->
-<!--    &lt;!&ndash;      </mat-card>&ndash;&gt;-->
-
-<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--    <div flex="50">-->
-<!--      <mat-card>Simple card</mat-card>-->
-<!--    </div>-->
-
-<!--    <div flex="50">-->
-<!--      <mat-card>Simple card</mat-card>-->
-<!--    </div>-->
-
-<!--  &lt;!&ndash;  <div layout-gt-sm="row">&ndash;&gt;-->
-
-<!--  &lt;!&ndash;    <div flex-gt-sm="50">&ndash;&gt;-->
-<!--  &lt;!&ndash;      <mat-card>Simple card</mat-card>&ndash;&gt;-->
-<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--  &lt;!&ndash;    <div flex-gt-sm="50">&ndash;&gt;-->
-<!--  &lt;!&ndash;      <mat-card>Simple card</mat-card>&ndash;&gt;-->
-<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--  &lt;!&ndash;  </div >&ndash;&gt;-->
-<!--</div>-->
-
-
-
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+<div class="info" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
   <div fxFlex="50%">
-    <mat-card fxLayout="row" fxLayoutAlign="center center">
+    <mat-card fxLayout="row" fxLayoutAlign="center center"  class="total-cows">
+      <mat-card-header>
+        <mat-card-title>
+          <p>Total de Vacas</p> <br>
+        </mat-card-title>
+        <mat-card-subtitle fxLayoutAlign="center center">
+          <span> {{ listCows.length }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+    </mat-card>
+  </div>
+
+  <div >
+    <mat-card fxLayout="row" fxLayoutAlign="center center"  class="top-1-filial">
+      <mat-card-header>
+        <mat-card-title>
+          <p>Filial #1</p> <br>
+        </mat-card-title>
+        <mat-card-subtitle fxLayoutAlign="center center">
+          <div *ngIf="cowsPerAffiliate.length > 0">
+            <span >{{ cowsPerAffiliate[0].name }}</span>
+            <br>
+            <span style="font-weight: bold;">{{ (cowsPerAffiliate[0].total / listCows.length) * 100| number: '2.0-2' }}%</span>
+          </div>
+
+        </mat-card-subtitle>
+      </mat-card-header>
+
+    </mat-card>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="graphic" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+  <div fxFlex="100%">
+    <mat-card *ngIf="top5ChartData.length > 0" fxLayout="row" fxLayoutAlign="center center">
+
       <div>
         <div>
           <div style="display: block">
+            <mat-card-title>
+              <p>Distribuição de vacas por Filial</p> <br>
+            </mat-card-title>
             <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
+                    [datasets]="top5ChartData"
+                    [labels]="top5ChartLabels"
+                    [options]="top5ChartOptions"
+                    [legend]="top5ChartLegend"
                     [plugins]="barChartPlugins"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
+                    [colors]="top5ChartColor"
+                    [chartType]="top5ChartType">
             </canvas>
           </div>
-          <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
+
         </div>
       </div>
     </mat-card>
   </div>
-  <div fxFlex="50%">
-    <mat-card fxLayout="row" fxLayoutAlign="center center">OK</mat-card>
-  </div>
 
 </div>
-
-<div>
-  <div >
-    <mat-card fxLayout="row" fxLayoutAlign="center center">OK</mat-card>
-  </div>
-
-  <div >
-    <mat-card fxLayout="row" fxLayoutAlign="center center">OK</mat-card>
-  </div>
-</div>
-

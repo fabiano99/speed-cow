@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../api/config.api';
 
@@ -7,7 +7,9 @@ import {environment} from '../../../api/config.api';
 })
 export class BreedService {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+  ) {}
 
   list(id?) {
     if (id) { return this.http.get(`${environment.host}:${environment.port}/breeds/${id}`); }
@@ -22,4 +24,6 @@ export class BreedService {
   delete(id) {
     return this.http.delete(`${environment.host}:${environment.port}/breeds/${id}`);
   }
+
+
 }

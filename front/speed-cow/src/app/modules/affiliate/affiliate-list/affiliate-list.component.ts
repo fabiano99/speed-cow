@@ -1,13 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Affiliate} from '../../../models/affiliate.model';
 import {AffiliateService} from '../service/affiliate.service';
-import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {toArray} from 'rxjs/operators';
-import {arrayify} from 'tslint/lib/utils';
 import {ExitComponent} from '../../dialogs/exit/exit.component';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
 import {ErrorComponent} from '../../dialogs/error/error.component';
 
 @Component({
@@ -16,7 +11,13 @@ import {ErrorComponent} from '../../dialogs/error/error.component';
   styleUrls: ['./affiliate-list.component.css']
 })
 export class AffiliateListComponent implements OnInit {
-  affiliates: Affiliate[];
+  affiliates: Affiliate[] = [];
+
+  pageEvent: PageEvent;
+  itemsPerPage = 5;
+  startIntervalPages =  0;
+  endIntervalPages = this.itemsPerPage;
+
   constructor(
     private service: AffiliateService,
     public snackBar: MatSnackBar,
@@ -27,6 +28,12 @@ export class AffiliateListComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+  }
+
+  functionPageEvent(e) {
+    this.pageEvent = e;
+    this.startIntervalPages = this.pageEvent.pageSize * this.pageEvent.pageIndex;
+    this.endIntervalPages = this.pageEvent.pageSize  * (this.pageEvent.pageIndex + 1 ) ;
   }
 
   delete(id) {

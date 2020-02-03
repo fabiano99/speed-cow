@@ -7,6 +7,7 @@ export interface Affiliate extends mongoose.Document {
 }
 
 const affiliateSchema = new mongoose.Schema({
+
 	name: {
 		type: String,
 		required: true,
@@ -19,8 +20,8 @@ const affiliateSchema = new mongoose.Schema({
 		max: environment.affiliateRule.limitOfCows,
 		min: 0,
 		default: 0,
-		select: false
+		select: true
 	}
 })
 
-export const Affiliate = mongoose.model<Affiliate>('Affliate', affiliateSchema)
+export const Affiliate = mongoose.model<Affiliate>('Affiliate', affiliateSchema)

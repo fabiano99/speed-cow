@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BreedService} from '../../service/breed.service';
 import {Breed} from '../../../../models/breed.model';
 import {ExitComponent} from '../../../dialogs/exit/exit.component';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
 import {ErrorComponent} from '../../../dialogs/error/error.component';
 
 @Component({
@@ -11,8 +11,12 @@ import {ErrorComponent} from '../../../dialogs/error/error.component';
   styleUrls: ['./breed-list.component.css']
 })
 export class BreedListComponent implements OnInit {
-  breeds: Breed[];
+  breeds: Breed[] = [];
 
+  pageEvent: PageEvent;
+  itemsPerPage = 5;
+  startIntervalPages =  0;
+  endIntervalPages = this.itemsPerPage;
   constructor(
     private service: BreedService,
     public snackBar: MatSnackBar,
@@ -21,6 +25,12 @@ export class BreedListComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+  }
+
+  functionPageEvent(e) {
+    this.pageEvent = e;
+    this.startIntervalPages = this.pageEvent.pageSize * this.pageEvent.pageIndex;
+    this.endIntervalPages = this.pageEvent.pageSize  * (this.pageEvent.pageIndex + 1 ) ;
   }
 
   load() {

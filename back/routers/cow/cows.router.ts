@@ -35,16 +35,32 @@ class CowsRouter extends ModelRouter<Cow> {
 
 	findByAffiliate = (req: restify.Request, resp: restify.Response, next: any)=>{
 
-		this.model.find({'affiliate': req.params.id}).then(result => {
+		this.model.find({'affiliate': req.params.id})
+		.populate('affiliate')
+		.then(result => {
 			if(result) {
 				resp.json(result)
 				
 			} else {
 				resp.json([])
 			}
-			return next
+			return next()
 		}).catch()
 
+	}
+
+	search = (req: restify.Request, resp: restify.Response, next: any) => {
+		let matchInternalCode = []
+		let matchAffiliate = []
+		let allMatches: any[] = []
+		this.model.find({'internalCode': req.params.id}).then(byCode => {
+			allMatches = byCode
+			affiliatesRouter.model.find({'name': req.params.id}).then(byAffiliate => {
+				allMatches = allMatches.concat(byAffiliate)
+				resp.json(allMatches)
+				return next()
+			}).catch()
+		}).catch()
 	}
 
 	findByBreed = (req: restify.Request, resp: restify.Response, next: any)=>{
@@ -71,6 +87,7 @@ class CowsRouter extends ModelRouter<Cow> {
 
 		application.get('/cows/affiliate/:id', [this.findByAffiliate])
 		application.get('/cows/breed/:id', [this.findByBreed])
+		application.get('/cows/search/:id', [this.search])
 
 	}
 }

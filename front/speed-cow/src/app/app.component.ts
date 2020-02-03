@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
-import * as moment from 'moment';
+import {MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'sc-root',
@@ -10,7 +11,12 @@ import * as moment from 'moment';
 })
 export class AppComponent {
 
-  constructor() {
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon(
+      'cow',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/vaca.svg')
+    );
   }
   title = 'speed-cow';
 
