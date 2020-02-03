@@ -1,0 +1,36 @@
+
+.total-cows {
+  width: 300px;
+  height: 200px;
+  background-color: #0097A7;
+  color: white;
+}
+
+.total-cows p {
+  font-size: 1.8em;
+}
+
+.total-cows span {
+  font-size: 4em;
+  color: #ccc;
+}
+
+.top-1-filial {
+  width: 300px;
+  height: 200px;
+  background-color: #0fa764;
+  color: white;
+  text-align: center
+}
+
+.top-1-filial span {
+  font-size: 1.5em;
+  color: white;
+}
+
+.top-1-filial p {
+  font-size: 1.8em;
+}
+.info {
+  margin: 20px;
+}

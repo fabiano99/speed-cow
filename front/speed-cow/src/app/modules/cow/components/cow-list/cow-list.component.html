@@ -1,0 +1,76 @@
+<mat-card  class="">
+  <mat-card-header>
+    <div mat-card-avatar class=""></div>
+    <mat-card-title>
+      <div>Lista de Vacas</div>
+    </mat-card-title>
+    <mat-card-subtitle>...</mat-card-subtitle>
+    <div  fxLayoutAlign="end start"  fxFlex="">
+      <mat-form-field  fxFlex="60">
+        <mat-label>Selecione uma Filial</mat-label>
+        <mat-select [value]="searchValue" [(ngModel)]="searchValue" (selectionChange)="search($event)" >
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let affiliate of affiliates" [value]="affiliate._id">
+            {{affiliate.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="cows?.length === 0" fxLayout="row" fxLayoutAlign="center center">
+      <mat-list >
+        <mat-list-item >
+          <mat-icon mat-list-icon>list</mat-icon>
+          <p mat-line>Não há registros</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <mat-list>
+      <h3 mat-subheader></h3>
+      <mat-list-item *ngFor="let cow of cows | slice:startIntervalPages: endIntervalPages ">
+        <mat-icon mat-list-icon svgIcon="cow" ></mat-icon>
+        <h4 mat-line ><span style="font-weight: bold">Cód. interno:</span> {{cow.internalCode}}</h4>
+        <p mat-line style="color: #616161">{{ cow.affiliate?.name }}</p>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu de opções para vacas">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="cow._id">
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+          </button>
+          <button mat-menu-item (click)="delete(cow._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Remover</span>
+          </button>
+        </mat-menu>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <!--      <mat-divider></mat-divider>-->
+    </mat-list>
+  </mat-card-content>
+
+  <mat-paginator [length]="cows.length"
+                 [pageSize]="itemsPerPage"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 [showFirstLastButtons]="true"
+                 (page)="functionPageEvent($event)"
+                 >
+
+  </mat-paginator>
+
+</mat-card>
+
+<div fxLayoutAlign="end end" style="margin-right: 20px; margin-top: 20px">
+  <button  mat-button mat-fab class="mat-fab-position-bottom-right z-3"   [routerLink]="['new_record']">
+    <mat-icon >add</mat-icon>
+  </button>
+</div>
+
+
+
+

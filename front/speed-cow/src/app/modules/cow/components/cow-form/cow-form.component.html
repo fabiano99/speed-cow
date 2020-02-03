@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar></div>
+    <mat-card-title>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon  >arrow_back</mat-icon>
+      </button>
+      Vaca
+    </mat-card-title>
+    <mat-card-subtitle>Informações da Vaca</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <form [formGroup]="form" fxFlex fxLayout="column" style="width: 100%">
+
+        <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" style="width: 90%">
+          <mat-form-field  fxFlex="40" >
+            <input formControlName="internalCode" matInput required  placeholder="Código Interno" >
+            <mat-error></mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="40" >
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="birth" formControlName="birthDate" placeholder="Data de Nascimento" required>
+            <mat-datepicker-toggle matSuffix [for]="birth"></mat-datepicker-toggle>
+            <mat-datepicker #birth></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" style="width: 90%">
+          <mat-form-field fxFlex="40">
+            <input required placeholder="Filial" aria-label="nome de filial" matInput formControlName="affiliate" [matAutocomplete]="autoAffiliate">
+            <mat-autocomplete #autoAffiliate="matAutocomplete" [displayWith]="displayAffiliate">
+              <mat-option *ngFor="let affiliate of filteredAffiliates | async" [value]="affiliate">
+                {{affiliate.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="40">
+            <input required placeholder="Raça" aria-label="nome de raça" matInput formControlName="breed" [matAutocomplete]="autoBreed">
+            <mat-autocomplete #autoBreed="matAutocomplete" [displayWith]="displayBreed">
+              <mat-option *ngFor="let breed of filteredBreeds | async" [value]="breed">
+                {{breed.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+      </form>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions fxLayoutAlign="end end">
+
+    <div fxLayout="row"  >
+      <button  mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">
+        <span style="color: white">Salvar</span>
+      </button>
+      <button  mat-raised-button   class="tc-grey-600" (click)="cancel()">
+        <span>Cancelar</span>
+      </button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>

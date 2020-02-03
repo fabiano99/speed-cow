@@ -1,0 +1,42 @@
+@import "../colors/primary-color";
+@import "../colors/secondary-color";
+
+$primary: mat-color($mat-primary, 600);
+$secondary: mat-color($mat-secondary, 200);
+$grey-color: mat-color($mat-grey, 800);
+
+.topbar {
+  top: 0;
+  height: 65px!important;
+  /*width: 100%;*/
+  background-color: #1e469a;
+  background-image: -webkit-gradient(linear, left top, right top, from($primary), to($secondary));
+  background-image: -webkit-linear-gradient(to right, $primary, $secondary);
+  background-image: -moz-linear-gradient(to right, $primary, $secondary);
+  background-image: -ms-linear-gradient(to right, $primary, $secondary);
+  background-image: -o-linear-gradient(to right, $primary, $secondary);
+  background-image: linear-gradient(to right, $primary, $secondary);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#12AABD", endColorstr="#C4C988", gradientType="1");
+  padding: 0!important;
+  margin: 0;
+}
+
+.mat-toolbar {
+  padding: 0!important;
+}
+
+.menu {
+  background-color: $grey-color!important;
+}
+
+.menu-item {
+  color: white!important;
+}
+
+.menu-item:hover{
+  border:1px solid #00ACC1!important;
+}
+
+.link-active {
+  color: $primary!important;
+}
