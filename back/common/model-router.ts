@@ -18,14 +18,18 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 	}
 
 	findAll = (req: restify.Request, resp: restify.Response, next: any)=>{
-		this.model.find().then(this.renderAll(resp, next))
+		this.model.find()
+		.populate('affiliate')
+		.sort('-affiliate')
+		.exec()
+		.then(this.renderAll(resp, next))
 		.catch(next)
 	}
 
 	findById =(req: restify.Request, resp: restify.Response, next: any)=>{
 		this.model.findById(req.params.id)
-		.populate('user', 'name')
-		.populate('restaurant', 'name')
+		.populate('breed')
+		.populate('affiliate')
 		.then(this.render(resp, next))
 		.catch(next)
 	}

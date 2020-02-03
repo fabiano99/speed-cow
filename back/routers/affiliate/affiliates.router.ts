@@ -18,7 +18,7 @@ class AffiliatesRouter extends ModelRouter<Affiliate> {
 
 	refreshTotal(idAffiliate: mongoose.Types.ObjectId, body: any){
 		const options = {runValidators: true,new: true}
-		this.model.findByIdAndUpdate(idAffiliate, body, options).then()
+		this.model.findByIdAndUpdate(idAffiliate, body, options).then().catch()
 	}
 
 	delete = (req: restify.Request, resp: restify.Response, next: any)=>{
@@ -34,7 +34,6 @@ class AffiliatesRouter extends ModelRouter<Affiliate> {
 					} else {
 						throw new NotFoundError('Documento não encontrado')
 					}
-		
 					return next()
 				}).catch(next)
 			}

@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar></div>
+    <mat-card-title>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon  >arrow_back</mat-icon>
+      </button>
+      Filial
+    </mat-card-title>
+    <mat-card-subtitle>Informações da Filial</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <form [formGroup]="form" fxFlex fxLayout="column" style="width: 100%">
+        <div fxLayout="column" fxLayout.gt-xs="row" style="width: 90%">
+          <mat-form-field fxFlex>
+            <input formControlName="name" matInput required  placeholder="Nome" >
+            <mat-error></mat-error>
+          </mat-form-field>
+        </div>
+
+      </form>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions fxLayoutAlign="end end">
+
+    <div fxLayout="row" >
+      <button  mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">
+        <span style="color: white">Salvar</span>
+      </button>
+      <button  mat-raised-button   class="tc-grey-600" (click)="cancel()">
+        <span>Cancelar</span>
+      </button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>
+

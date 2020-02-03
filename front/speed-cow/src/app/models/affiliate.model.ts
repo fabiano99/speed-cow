@@ -1,7 +1,7 @@
-export class Affiliate {
+export interface Affiliate {
 
-	id: string;
+	_id: string;
 	name: string;
 	totalCows: number;
-
+  __v: any;
 }

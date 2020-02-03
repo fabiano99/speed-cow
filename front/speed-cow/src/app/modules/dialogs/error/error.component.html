@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Ocorreu um erro:</h1>
+<span style="color: #616161">{{ data.status }} {{ data.statusText }}</span>
+<p>{{ data.error.message }}</p>
+
+
+<div mat-dialog-actions fxLayoutAlign="center center">
+  <button mat-button mat-raised-button color="warn" (click)="onNoClick()">Ok</button>
+</div>

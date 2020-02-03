@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { validDate } from '../../common/validators'
 import { affiliatesRouter } from '../affiliate/affiliates.router'
 import { environment } from '../../common/environment'
-import { BadRequestError, NotAcceptableError, PreconditionFailedError, NotFoundError, InternalServerError } from 'restify-errors'
+import { BadRequestError, InternalServerError } from 'restify-errors'
 
 export interface Cow extends mongoose.Document {
 	internalCode: string,
@@ -30,10 +30,12 @@ const cowSchema = new mongoose.Schema({
 	},
 	affiliate: {
 		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Affiliate',
 		required: true
 	},
 	breed: {
 		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Breed',
 		required: true
 	}
 })
@@ -47,9 +49,8 @@ const saveMiddleware = function(this: any, next: any) {
 		else if (affiliate?.totalCows >= environment.affiliateRule.limitOfCows) {
 			next(new BadRequestError('Execeeded limit of cows'))
 		} else {
-			affiliate.totalCows = affiliate?.totalCows + 1 
-			affiliatesRouter.refreshTotal(affiliate?._id, affiliate)
-			next()
+			
+			return next()
 		}
 	})
 	
@@ -61,8 +62,10 @@ const updateMiddleware = function(this: any, next: any) {
 
 	this.model.findById(this._conditions._id).then((oldValues: Cow) => {
 
-		if(oldValues.affiliate == newValues.affiliate || !newValues.affiliate) {
-			next()
+		console.log('valor antigo => ', oldValues)
+		console.log('valor novo => ', newValues)
+		if(oldValues.affiliate == newValues.affiliate._id || !newValues.affiliate) {
+			return next()
 		} else {
 			affiliatesRouter.totalCows(this.getUpdate().affiliate).then(af => {
 				let affiliate = af
@@ -79,7 +82,7 @@ const updateMiddleware = function(this: any, next: any) {
 						else {
 							affiliate.totalCows = af?.totalCows - 1
 							affiliatesRouter.refreshTotal(oldValues.affiliate, affiliate)
-							next()
+							return next()
 						}
 						
 					})
@@ -90,9 +93,23 @@ const updateMiddleware = function(this: any, next: any) {
 	})
 }
 
+const updateTotalCows = function(this: any, next: any) {
+	affiliatesRouter.totalCows(this.affiliate).then(affiliate => {
+
+		if(affiliate == null || affiliate == undefined) {next(new InternalServerError('Unexpected error'))}
+		else {
+			affiliate.totalCows = affiliate?.totalCows + 1 
+			affiliatesRouter.refreshTotal(affiliate?._id, affiliate)
+			return next()
+		}
+	})
+}
+
 
 cowSchema.pre('save', saveMiddleware)
 cowSchema.pre('findOneAndUpdate',updateMiddleware)
 cowSchema.pre('update',updateMiddleware)
+
+cowSchema.post('save', updateTotalCows)
 
 export const Cow = mongoose.model<Cow>('Cow', cowSchema)

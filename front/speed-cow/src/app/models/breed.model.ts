@@ -1,4 +1,5 @@
-export class Breed {
-	id: string;
-	name: string;
+export interface Breed {
+  _id: string;
+  name: string;
+  __v: any;
 }
