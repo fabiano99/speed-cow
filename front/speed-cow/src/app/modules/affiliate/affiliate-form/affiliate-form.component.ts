@@ -22,6 +22,7 @@ export class AffiliateFormComponent implements OnInit {
     this.form = fb.group({
       _id: [],
       name: ['', [Validators.required, Validators.minLength(5)]],
+      totalCows: [0],
       __v: []
     });
   }
