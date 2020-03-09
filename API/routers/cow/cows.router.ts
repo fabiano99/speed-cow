@@ -80,7 +80,7 @@ class CowsRouter extends ModelRouter<Cow> {
 
 		application.get('/cows', this.findAll)
 		application.get('/cows/:id', [this.validadeId, this.findById])
-		application.post('/cows', [this.save])
+		application.post('/cows', this.save)
 		application.put('/cows/:id', [this.validadeId, this.replace])
 		application.patch('/cows/:id', [this.validadeId, this.update])
 		application.del('/cows/:id', [this.validadeId, this.deleteAndUpdate])

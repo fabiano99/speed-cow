@@ -100,7 +100,7 @@ const updateTotalCows = function(this: any, next: any) {
 		else {
 			affiliate.totalCows = affiliate?.totalCows + 1 
 			affiliatesRouter.refreshTotal(affiliate?._id, affiliate)
-			return next()
+			return next
 		}
 	})
 }
