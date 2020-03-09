@@ -9,4 +9,4 @@ O projeto consiste em desenvolver um sistema para gerenciamento de *VACAS*.
 ### CRUD de vacas.
 ### CRUD de raças.
 
-###As vacas são categorizadas por filiais, cada filial pode ter o limite máximo de 200 VACAS.
+### As vacas são categorizadas por filiais, cada filial pode ter o limite máximo de 200 VACAS.
