@@ -8,6 +8,7 @@
 ## Execução
 Executar dentro do diretório
 ```bash
+$ npm i
 $ tsc
 $ node ./dist/main.js
 ```
