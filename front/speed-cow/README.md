@@ -1,7 +1,5 @@
 # SpeedCow
 
-## Development server
-
 ### Executar o projeto pela primeira vez
 `npm run first-start`
 
