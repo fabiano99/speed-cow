@@ -4,7 +4,6 @@
 
 * NodeJS
 * Typescript
-* MongoDB
 
 ## Execução
 Executar dentro do diretório
